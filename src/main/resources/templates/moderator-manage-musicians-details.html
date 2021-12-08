@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4 txt-blue">Welcome to moderator page</h1>
+        <p class="lead">This is a website where you can find your favourite artists and bands.<br>You can manage
+            musicians here.</p>
+        <hr class="my-4">
+    </div>
+</div>
+
+<div class="container text-center p-5">
+    <h2 class="txt-blue">This is a page for musicians management.</h2>
+    <div class="container p-5">
+        <div th:object="${musicianViewModel}" class="col">
+            <img th:src="${pictureViewModel.url}" class="rounded mx-auto d-block img-fluid" alt="Responsive image">
+            <h2 th:text="*{name}" class="txt-blue mt-5"></h2>
+            <h6 th:text="|From: *{country}|" class="text-justify mt-3"></h6>
+            <p th:text="*{history}" class="text-justify mt-3"></p>
+            <h6 class="text-left" th:text="|Albums:|"></h6>
+            <p>
+            <ol th:each="a : *{albums}" class="text-left">
+                <li th:text="|${a.name}, released: ${a.released}, genre: ${a.genre}, price: ${a.price}|"></li>
+            </ol>
+            </p>
+            <h6 class="text-left" th:text="|Coming event:|"></h6>
+            <p class="text-left"
+               th:text="|*{event.name}, When: ${dateTimePattern}h., Where: *{event.location}, Ticket price: *{event.price} BGN|"></p>
+
+
+            <a type="button" class="btn btn-primary btn-link btn-sm btn-txt-white"
+               th:href="@{/artists/manage/musicians/details/{id}/edit(id=*{id})}">Edit</a>
+            <a type="button" class="btn btn-primary btn-link btn-sm btn-txt-white"
+               th:href="@{/artists/manage/musicians/details/{id}/delete(id=*{id})}">Delete</a>
+
+        </div>
+    </div>
+</div>
+
+<hr th:replace="fragments/commons::hr">
+
+<footer class="navbar bg-secondary navbar-dark navbar-expand-md fixed-bottom">
+    <ul class="nav ml-auto mr-auto">
+        <li class="nav-item">
+            <span class="nav-link" style="color: whitesmoke">SoftUni.BG Java Web - Spring Advanced Final Project</span>
+        </li>
+    </ul>
+</footer>
+
+<script th:replace="fragments/commons::jQuery"></script>
+<script th:replace="fragments/commons::PopperJS"></script>
+<script th:replace="fragments/commons::BootstrapJS"></script>
+</body>
+</html>

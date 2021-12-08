@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4 txt-blue">Welcome to admin page</h1>
+        <p class="lead">This is a website where you can find your favourite artists and bands.<br>You can manage users
+            here.</p>
+        <hr class="my-4">
+    </div>
+</div>
+
+<div class="container text-center p-5">
+    <h2 class="txt-blue">This is a page for user roles management.</h2>
+    <div class="form-group p-5">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col" class="text-center">ADMIN</th>
+                <th scope="col" class="text-center">MODERATOR</th>
+                <th scope="col" class="text-center">USER</th>
+            </tr>
+            </thead>
+            <tbody th:object="${userRoles}">
+            <tr th:each="u : ${userRoles}">
+                <td class="rowNum" th:text="${u.id}"></td>
+                <td th:text="${u.username}"></td>
+                <th:block th:if="${u.admin}">
+                    <td class="text-center">
+                        <form th:method="post"
+                              th:action="@{/admin/roles/{id}/{role}/{action}(id=${u.id}, role='admin', action='remove')}"
+                              class="needs-validation" novalidate>
+                            <button type="submit" class="btn btn-primary btn-sm">Remove</button>
+                        </form>
+                    </td>
+                </th:block>
+
+                <th:block th:unless="${u.admin}">
+                    <td class="text-center">
+                        <form th:method="post"
+                              th:action="@{/admin/roles/{id}/{role}/{action}(id=${u.id}, role='admin', action='add')}"
+                              class="needs-validation" novalidate>
+                            <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                        </form>
+                    </td>
+                </th:block>
+
+                <th:block th:if="${u.moderator}">
+                    <td class="text-center">
+                        <form th:method="post"
+                              th:action="@{/admin/roles/{id}/{role}/{action}(id=${u.id}, role='moderator', action='remove')}"
+                              class="needs-validation" novalidate>
+                            <button type="submit" class="btn btn-primary btn-sm">Remove</button>
+                        </form>
+                    </td>
+                </th:block>
+
+                <th:block th:unless="${u.moderator}">
+                    <td class="text-center">
+                        <form th:method="post"
+                              th:action="@{/admin/roles/{id}/{role}/{action}(id=${u.id}, role='moderator', action='add')}"
+                              class="needs-validation" novalidate>
+                            <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                        </form>
+                    </td>
+                </th:block>
+
+                <th:block th:if="${u.user}">
+                    <td class="text-center">
+                        <form th:method="post"
+                              th:action="@{/admin/roles/{id}/{role}/{action}(id=${u.id}, role='user', action='remove')}"
+                              class="needs-validation" novalidate>
+                            <button type="submit" class="btn btn-primary btn-sm">Remove</button>
+                        </form>
+                    </td>
+                </th:block>
+
+                <th:block th:unless="${u.user}">
+                    <td class="text-center">
+                        <form th:method="post"
+                              th:action="@{/admin/roles/{id}/{role}/{action}(id=${u.id}, role='user', action='add')}"
+                              class="needs-validation" novalidate>
+                            <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                        </form>
+                    </td>
+                </th:block>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<hr th:replace="fragments/commons::hr">
+
+<footer class="navbar bg-secondary navbar-dark navbar-expand-md fixed-bottom">
+    <ul class="nav ml-auto mr-auto">
+        <li class="nav-item">
+            <span class="nav-link" style="color: whitesmoke">SoftUni.BG Java Web - Spring Advanced Final Project</span>
+        </li>
+    </ul>
+</footer>
+
+<script th:replace="fragments/commons::jQuery"></script>
+<script th:replace="fragments/commons::PopperJS"></script>
+<script th:replace="fragments/commons::BootstrapJS"></script>
+</body>
+</html>

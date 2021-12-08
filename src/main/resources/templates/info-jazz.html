@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4 txt-blue">Welcome to Jazz info page</h1>
+        <p class="lead">This is a website where you can find your favourite artists and bands.<br>Read more about Jazz here.</p>
+        <hr class="my-4">
+    </div>
+</div>
+
+<div class="container p-5">
+    <div class="col">
+        <img src="http://res.cloudinary.com/user9913/image/upload/v1638716585/q0sgyen66vvtc2jfcye8.png" class="rounded mx-auto d-block img-fluid" alt="Image not found">
+        <h2 class="txt-blue mt-5">Jazz</h2>
+        <p th:text="|${(T(bg.softuni.musicstore.constants.OutputMessages).JAZZ_DESCRIPTION)}|" class="text-justify mt-3"></p>
+        <th:block sec:authorize="!isAuthenticated()">
+            <a type="button" class="btn btn-light btn-link" th:href="@{/users/login}">Find more</a>
+        </th:block>
+        <th:block sec:authorize="isAuthenticated()">
+            <a type="button" class="btn btn-light btn-link" th:href="@{/}">Home</a>
+        </th:block>
+    </div>
+</div>
+
+<hr th:replace="fragments/commons::hr">
+
+<footer class="navbar bg-secondary navbar-dark navbar-expand-md fixed-bottom">
+    <ul class="nav ml-auto mr-auto">
+        <li class="nav-item">
+            <span class="nav-link" style="color: whitesmoke">SoftUni.BG Java Web - Spring Advanced Final Project</span>
+        </li>
+    </ul>
+</footer>
+
+<script th:replace="fragments/commons::jQuery"></script>
+<script th:replace="fragments/commons::PopperJS"></script>
+<script th:replace="fragments/commons::BootstrapJS"></script>
+</body>
+</html>
