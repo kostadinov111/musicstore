@@ -1,23 +1,22 @@
 package bg.softuni.musicstore.model.entity;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
-    private String name;
-    private String description;
+    private static Long NUMBER_OF_ORDER = 0L;
+
+    private String name = "my order" + ++NUMBER_OF_ORDER;
+    private String description = "my description";
     private BigDecimal price;
-    private LocalDateTime orderTime;
-    //private List<AlbumEntity> albums = new ArrayList<>();
+    private LocalDateTime orderTime = LocalDateTime.now();
+    private AlbumEntity album;
     private UserEntity user;
 
     public OrderEntity() {
@@ -65,17 +64,6 @@ public class OrderEntity extends BaseEntity {
         return this;
     }
 
-//    @Transactional
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-//    public List<AlbumEntity> getAlbums() {
-//        return albums;
-//    }
-//
-//    public OrderEntity setAlbums(List<AlbumEntity> albums) {
-//        this.albums = albums;
-//        return this;
-//    }
-
     @ManyToOne
     public UserEntity getUser() {
         return user;
@@ -83,6 +71,16 @@ public class OrderEntity extends BaseEntity {
 
     public OrderEntity setUser(UserEntity user) {
         this.user = user;
+        return this;
+    }
+
+    @ManyToOne
+    public AlbumEntity getAlbum() {
+        return album;
+    }
+
+    public OrderEntity setAlbum(AlbumEntity album) {
+        this.album = album;
         return this;
     }
 }

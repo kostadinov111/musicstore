@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
-@RequestMapping("/artists/manage")
+@RequestMapping("/artists/manage/musicians")
 public class ModeratorManageMusiciansController {
 
     private final MusicianService musicianService;
@@ -43,7 +43,7 @@ public class ModeratorManageMusiciansController {
         return new MusicianViewModel();
     }
 
-    @GetMapping("/musicians")
+    @GetMapping
     public String getMusicians(Model model) {
 
         List<MusicianViewModel> musicianViewModelList =
@@ -55,7 +55,7 @@ public class ModeratorManageMusiciansController {
         return "moderator-manage-musicians";
     }
 
-    @GetMapping("/musicians/details/{id}/edit")
+    @GetMapping("/details/{id}/edit")
     public String editMusicians(@PathVariable Long id,
                                 Model model
     ) {
@@ -72,14 +72,14 @@ public class ModeratorManageMusiciansController {
         return "moderator-manage-musicians-edit";
     }
 
-    @GetMapping("/musicians/details/{id}/edit/errors")
+    @GetMapping("/details/{id}/edit/errors")
     public String updateMusiciansErrors(@PathVariable Long id
     ) {
 
         return "moderator-manage-musicians-edit";
     }
 
-    @PatchMapping("/musicians/details/{id}/edit")
+    @PatchMapping("/details/{id}/edit")
     public String updateMusician(@PathVariable Long id,
                                  @Valid MusicianEditBindingModel musicianEditBindingModel,
                                  BindingResult bindingResult,
@@ -105,7 +105,7 @@ public class ModeratorManageMusiciansController {
 
     }
 
-    @GetMapping("/musicians/{id}/details/")
+    @GetMapping("/{id}/details")
     public String showMusicianDetails(@PathVariable Long id,
                                       Model model
     ) {
@@ -134,8 +134,10 @@ public class ModeratorManageMusiciansController {
         return "moderator-manage-musicians-details";
     }
 
-    @DeleteMapping("/musicians/details/{id}/delete")
+    @DeleteMapping("/details/{id}/delete")
     public String deleteMusician(@PathVariable Long id) {
+
+        pictureService.detachFromMusician(id);
 
         musicianService
                 .deleteMusicianEntityById(id);

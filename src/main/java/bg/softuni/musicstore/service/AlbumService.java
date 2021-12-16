@@ -1,6 +1,7 @@
 package bg.softuni.musicstore.service;
 
 import bg.softuni.musicstore.model.dto.AlbumsDTO;
+import bg.softuni.musicstore.model.entity.AlbumEntity;
 import bg.softuni.musicstore.model.view.AlbumViewModel;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface AlbumService {
     AlbumViewModel findAlbumById(Long id);
 
     Long updateAlbum(AlbumsDTO albumsDTO);
+
+    List<AlbumViewModel> findAll();
+
+    Optional<AlbumEntity> findAlbumEntityById(Long albumId);
 }

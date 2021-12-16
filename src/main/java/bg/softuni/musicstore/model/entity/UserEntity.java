@@ -8,12 +8,12 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-@NamedEntityGraph(
-        name = "user-roles",
-        attributeNodes = {
-                @NamedAttributeNode("roles")
-        }
-)
+//@NamedEntityGraph(
+//        name = "user-roles",
+//        attributeNodes = {
+//                @NamedAttributeNode("roles")
+//        }
+//)
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
@@ -26,8 +26,6 @@ public class UserEntity extends BaseEntity {
     private Integer age;
     private Boolean enabled = true;
     private List<RoleEntity> roles = new ArrayList<>();
-//    private List<OrderEntity> orders = new ArrayList<>();
-//    private List<EventEntity> events = new ArrayList<>();
 
     public UserEntity() {
     }
@@ -98,7 +96,7 @@ public class UserEntity extends BaseEntity {
     }
 
     @Transactional
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     public List<RoleEntity> getRoles() {
         return roles;
     }
@@ -107,28 +105,6 @@ public class UserEntity extends BaseEntity {
         this.roles = roles;
         return this;
     }
-
-//    @Transactional
-//    @OneToMany(fetch = FetchType.LAZY)//, mappedBy = "user")
-//    public List<OrderEntity> getOrders() {
-//        return orders;
-//    }
-//
-//    public UserEntity setOrders(List<OrderEntity> orders) {
-//        this.orders = orders;
-//        return this;
-//    }
-//
-//    @Transactional
-//    @OneToMany(fetch = FetchType.LAZY)//, mappedBy = "user")
-//    public List<EventEntity> getEvents() {
-//        return events;
-//    }
-//
-//    public UserEntity setEvents(List<EventEntity> events) {
-//        this.events = events;
-//        return this;
-//    }
 
     public Boolean getEnabled() {
         return enabled;

@@ -1,7 +1,9 @@
 package bg.softuni.musicstore.service.impl;
 
+import bg.softuni.musicstore.model.entity.MusicianEntity;
 import bg.softuni.musicstore.model.entity.SongEntity;
 import bg.softuni.musicstore.model.service.SongAddServiceModel;
+import bg.softuni.musicstore.model.service.SongUpdateServiceModel;
 import bg.softuni.musicstore.model.view.SongViewModel;
 import bg.softuni.musicstore.repository.SongRepository;
 import bg.softuni.musicstore.service.SongService;
@@ -52,5 +54,26 @@ public class SongServiceImpl implements SongService {
         }
 
         return modelMapper.map(songEntity.get(), SongViewModel.class);
+    }
+
+    @Override
+    public void updateSong(SongUpdateServiceModel songUpdateServiceModel) {
+
+        Optional<SongEntity> songEntity = songRepository.findById(songUpdateServiceModel.getId());
+
+        if (songEntity.isPresent()) {
+            songEntity.get()
+                    .setName(songUpdateServiceModel.getName())
+                    .setDuration(songUpdateServiceModel.getDuration())
+                    .setGenre(songUpdateServiceModel.getGenre());
+
+            songRepository.save(songEntity.get());
+        }
+    }
+
+    @Override
+    public void deleteSongEntityById(Long id) {
+
+        songRepository.deleteById(id);
     }
 }

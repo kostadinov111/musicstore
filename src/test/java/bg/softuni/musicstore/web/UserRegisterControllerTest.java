@@ -1,5 +1,6 @@
 package bg.softuni.musicstore.web;
 
+import bg.softuni.musicstore.model.entity.UserEntity;
 import bg.softuni.musicstore.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -48,7 +51,7 @@ class UserRegisterControllerTest {
                         .param("password", "1234")
                         .param("confirmPassword", "1234")
                         .param("email", TEST_USER_EMAIL)
-                        .param("fisrtName", "Pesho")
+                        .param("firtsName", "Pesho")
                         .param("lastName", "Peshov")
                         .param("age", "20")
                         .with(csrf())

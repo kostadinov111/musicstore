@@ -2,6 +2,7 @@ package bg.softuni.musicstore.web;
 
 import bg.softuni.musicstore.model.binding.SongAddBindingModel;
 import bg.softuni.musicstore.model.service.SongAddServiceModel;
+import bg.softuni.musicstore.model.service.SongUpdateServiceModel;
 import bg.softuni.musicstore.model.view.SongViewModel;
 import bg.softuni.musicstore.service.SongService;
 import org.modelmapper.ModelMapper;
@@ -17,7 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/artists/manage")
+@RequestMapping("/artists/manage/songs")
 public class ModeratorManageSongsController {
 
     private final SongService songService;
@@ -38,7 +39,7 @@ public class ModeratorManageSongsController {
         return new SongAddBindingModel();
     }
 
-    @GetMapping("/songs")
+    @GetMapping
     public String getSongs(Model model) {
 
         List<SongViewModel> songViewModelList = songService.findAllSongs();
@@ -48,13 +49,13 @@ public class ModeratorManageSongsController {
         return "moderator-manage-songs";
     }
 
-    @GetMapping("/songs/add/errors")
+    @GetMapping("/add/errors")
     public String addSongErrors() {
 
         return "moderator-manage-songs-add";
     }
 
-    @GetMapping("/songs/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editSong(@PathVariable Long id,
                                 Model model
     ) {
@@ -80,7 +81,7 @@ public class ModeratorManageSongsController {
         return modelAndView;
     }
 
-    @PostMapping("/songs/add")
+    @PostMapping("/add")
     public String addSong(@Valid SongAddBindingModel songAddBindingModel,
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) {
@@ -101,10 +102,41 @@ public class ModeratorManageSongsController {
         return "redirect:/artists/manage/songs";
     }
 
-    @PatchMapping("/songs/{id}/edit")
-    public String updateSong(@PathVariable Long id) {
+    @PatchMapping("/{id}/edit")
+    public String updateSong(@PathVariable Long id,
+                             @Valid SongAddBindingModel songAddBindingModel,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
 
-//        SongAddServiceModel songAddServiceModel = songService.updateSongById(id);
+            redirectAttributes
+                    .addFlashAttribute("songAddBindingModel", songAddBindingModel)
+                    .addFlashAttribute("org.springframework.validation.BindingResult.songAddBindingModel", bindingResult);
+
+            return "redirect:/artists/manage/songs/details/" + id + "/edit/errors";
+        }
+
+        SongUpdateServiceModel songUpdateServiceModel = modelMapper.map(songAddBindingModel, SongUpdateServiceModel.class);
+
+        songUpdateServiceModel.setId(id);
+
+        songService.updateSong(songUpdateServiceModel);
+
+        return "redirect:/artists/manage/songs";
+    }
+
+    @GetMapping("/details/{id}/edit/errors")
+    public String updateSongsErrors(@PathVariable Long id
+    ) {
+
+        return "moderator-manage-songs-edit";
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public String deleteById(@PathVariable Long id) {
+
+        songService.deleteSongEntityById(id);
 
         return "redirect:/artists/manage/songs";
     }

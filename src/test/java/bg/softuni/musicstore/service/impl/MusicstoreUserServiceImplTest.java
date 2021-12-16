@@ -62,20 +62,27 @@ class MusicstoreUserServiceImplTest {
                 () -> serviceToTest.loadUserByUsername("invalid-user-email@wrong-domain"));
     }
 
-//    @Test
-//    void testUsernameFound() {
-//
-//        // Arrange
-//        Mockito.when(mockUserRepository.findByUsername(testUser.getUsername()))
-//                .thenReturn(Optional.of(testUser));
-//
-//        // Act
-//        var actual =
-//                serviceToTest.loadUserByUsername(testUser.getUsername());
-//
-//        System.out.println();
-//        // Assert
-//        Assertions.assertEquals(actual.getUsername(), testUser.getUsername());
-//    }
+    @Test
+    void testUsernameFound() {
+
+        // Arrange
+        Mockito.when(mockUserRepository.findByUsername(testUser.getUsername()))
+                .thenReturn(Optional.of(testUser));
+
+        // Act
+        var actual =
+                serviceToTest.loadUserByUsername(testUser.getUsername());
+
+        // Assert
+        String expectedRoles = "ROLE_ADMIN, ROLE_MODERATOR, ROLE_USER";
+        String actualRoles = actual.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(", "));
+
+
+        Assertions.assertEquals(actual.getUsername(), testUser.getUsername());
+        Assertions.assertEquals(expectedRoles, actualRoles);
+    }
 
 }

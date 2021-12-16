@@ -24,4 +24,6 @@ public interface UserService {
     void removeRole(Long id, String role);
 
     void addRole(Long id, String role);
+
+    UserEntity findByUsername(String principalUsername);
 }

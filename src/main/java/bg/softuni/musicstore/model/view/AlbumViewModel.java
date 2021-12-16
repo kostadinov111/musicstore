@@ -12,6 +12,7 @@ public class AlbumViewModel {
     private LocalDate released;
     private BigDecimal price;
     private GenreEnums genre;
+    private Long OwnerId;
 
     public AlbumViewModel() {
     }
@@ -58,6 +59,15 @@ public class AlbumViewModel {
 
     public AlbumViewModel setGenre(GenreEnums genre) {
         this.genre = genre;
+        return this;
+    }
+
+    public Long getOwnerId() {
+        return OwnerId;
+    }
+
+    public AlbumViewModel setOwnerId(Long ownerId) {
+        OwnerId = ownerId;
         return this;
     }
 }

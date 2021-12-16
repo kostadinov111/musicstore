@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/commons::head"></head>
+<body>
+<nav th:replace="fragments/commons::nav"></nav>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4 txt-blue">Welcome to orders page</h1>
+        <p class="lead">This is a website where you can find your favourite artists and bands.<br>You can manage
+            musicians here.</p>
+        <hr class="my-4">
+    </div>
+</div>
+
+<div class="container text-center p-5">
+
+    <div class="form-group p-5">
+        <h3 class="orderHeadings colorFirst">The list of your ordered albums.</h3>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Album</th>
+                <th scope="col">Released</th>
+                <th scope="col">Price [BGN]</th>
+                <th scope="col">Genre</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="o, stat : ${albumOrderedViewModelList}">
+                <td class="rowNum" th:text="${stat.index + 1}"></td>
+                <td th:text="${o.name}"></td>
+                <td th:text="${o.released}"></td>
+                <td th:text="${o.price}"></td>
+                <td th:text="${o.genre}"></td>
+                <td>
+                    <form th:action="@{/orders/remove/{id}(id=${o.ownerId})}"
+                          th:method="delete">
+                        <input type="hidden" class="form-control w-auto">
+                        <input type="hidden" th:value="${o.name}">
+                        <input type="hidden" th:value="${o.released}">
+                        <input type="hidden" th:value="${o.price}">
+                        <input type="hidden" th:value="${o.genre}">
+                        <button type="submit" class="btn btn-primary btn-sm">Remove</button>
+                    </form>
+                </td>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th id="total" colspan="3">Total:</th>
+                <td id="totalSum" th:text="${total}"></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="form-group p-5">
+        <h3 class="orderHeadings colourSecond">The list of albums.</h3>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Album</th>
+                <th scope="col">Released</th>
+                <th scope="col">Price [BGN]</th>
+                <th scope="col">Genre</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="a, stat : ${albumViewModelList}">
+                <td class="rowNum" th:text="${stat.index + 1}"></td>
+                <td th:text="${a.name}"></td>
+                <td th:text="${a.released}"></td>
+                <td th:text="${a.price}"></td>
+                <td th:text="${a.genre}"></td>
+                <td>
+                    <form th:action="@{/orders/add/{id}(id=${a.id})}"
+                          th:method="post">
+                        <input type="hidden" class="form-control w-auto">
+                        <input type="hidden" th:value="${a.name}">
+                        <input type="hidden" th:value="${a.released}">
+                        <input type="hidden" th:value="${a.price}">
+                        <input type="hidden" th:value="${a.genre}">
+                        <button type="submit" class="btn btn-primary btn-sm">Order</button>
+                    </form>
+                </td>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<hr th:replace="fragments/commons::hr">
+
+<footer class="navbar bg-secondary navbar-dark navbar-expand-md fixed-bottom">
+    <ul class="nav ml-auto mr-auto">
+        <li class="nav-item">
+            <span class="nav-link" style="color: whitesmoke">SoftUni.BG Java Web - Spring Advanced Final Project</span>
+        </li>
+    </ul>
+</footer>
+
+<script th:replace="fragments/commons::jQuery"></script>
+<script th:replace="fragments/commons::PopperJS"></script>
+<script th:replace="fragments/commons::BootstrapJS"></script>
+</body>
+</html>

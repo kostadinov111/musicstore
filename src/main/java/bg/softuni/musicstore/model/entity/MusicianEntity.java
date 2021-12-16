@@ -21,7 +21,6 @@ public class MusicianEntity extends BaseEntity {
     private String country;
     private List<AlbumEntity> albums = new ArrayList<>();
     private EventEntity event;
-    //private List<PictureEntity> pictures;
 
     public MusicianEntity() {
     }
@@ -77,14 +76,4 @@ public class MusicianEntity extends BaseEntity {
         this.event = event;
         return this;
     }
-
-//    @OneToMany
-//    public List<PictureEntity> getPictures() {
-//        return pictures;
-//    }
-//
-//    public MusicianEntity setPictures(List<PictureEntity> pictures) {
-//        this.pictures = pictures;
-//        return this;
-//    }
 }

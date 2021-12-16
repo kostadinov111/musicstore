@@ -7,6 +7,7 @@ import bg.softuni.musicstore.model.view.UserManageViewModel;
 import bg.softuni.musicstore.model.view.UserRolesManageViewModel;
 import bg.softuni.musicstore.repository.*;
 import bg.softuni.musicstore.service.UserService;
+import bg.softuni.musicstore.web.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -159,6 +161,19 @@ public class UserServiceImpl implements UserService {
         userEntity.getRoles().add(roleEntity);
 
         userRepository.save(userEntity);
+    }
+
+    @Override
+    public UserEntity findByUsername(String principalUsername) {
+
+        Optional<UserEntity> userEntityOptional = userRepository.findByUsername(principalUsername);
+
+        if (userEntityOptional.isEmpty()) {
+            throw new ObjectNotFoundException(0L);
+        }
+
+        return userEntityOptional.get();
+
     }
 
     private int getIndexToRemoveRole(UserEntity userEntity, String role) {

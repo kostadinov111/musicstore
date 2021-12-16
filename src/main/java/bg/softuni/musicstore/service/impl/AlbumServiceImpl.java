@@ -112,5 +112,21 @@ public class AlbumServiceImpl implements AlbumService {
         return albumEntity.get().getId();
     }
 
+    @Override
+    public List<AlbumViewModel> findAll() {
+
+        return albumRepository
+                .findAll()
+                .stream()
+                .map(albumEntity -> modelMapper.map(albumEntity, AlbumViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<AlbumEntity> findAlbumEntityById(Long albumId) {
+
+        return albumRepository.findById(albumId);
+    }
+
 
 }

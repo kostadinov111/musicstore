@@ -1,6 +1,7 @@
 package bg.softuni.musicstore.service.impl;
 
 import bg.softuni.musicstore.model.entity.PictureEntity;
+import bg.softuni.musicstore.model.view.PictureOfMusicianViewModel;
 import bg.softuni.musicstore.model.view.PictureViewModel;
 import bg.softuni.musicstore.repository.PictureRepository;
 import bg.softuni.musicstore.service.PictureService;
@@ -48,5 +49,36 @@ public class PictureServiceImpl implements PictureService {
 
         return modelMapper
                 .map(pictureRepository.findPictureEntityByMusicianId(musicianId), PictureViewModel.class);
+    }
+
+    @Override
+    public void detachFromMusician(Long musicianId) {
+
+        PictureEntity pictureEntityByMusicianId = pictureRepository.findPictureEntityByMusicianId(musicianId);
+
+        pictureEntityByMusicianId.setMusician(null);
+
+        pictureRepository.save(pictureEntityByMusicianId);
+
+    }
+
+    @Override
+    public List<PictureOfMusicianViewModel> findAllPictureOfMusicians() {
+
+        return pictureRepository
+                .findAll()
+                .stream()
+                .filter(pictureEntity -> pictureEntity.getMusician() != null)
+                .map(pictureEntity -> {
+                    PictureOfMusicianViewModel pictureOfMusicianViewModel = new PictureOfMusicianViewModel();
+
+                    pictureOfMusicianViewModel.setId(pictureEntity.getId());
+                    pictureOfMusicianViewModel.setTitle(pictureEntity.getTitle());
+                    pictureOfMusicianViewModel.setUrl(pictureEntity.getUrl());
+                    pictureOfMusicianViewModel.setMusician(pictureEntity.getMusician());
+
+                    return pictureOfMusicianViewModel;
+                })
+                .collect(Collectors.toList());
     }
 }

@@ -29,7 +29,7 @@ public class MusicstoreUserServiceImpl implements UserDetailsService {
                 .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("Username with name \"%s\" is not found.", username)));
 
-        return mapToUserDetails(userRepository.getUserEntity(userEntity.getId()));
+        return mapToUserDetails(userEntity);
     }
 
     private UserDetails mapToUserDetails(UserEntity userEntity) {

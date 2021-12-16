@@ -1,8 +1,6 @@
 package bg.softuni.musicstore.model.entity;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,9 +20,8 @@ public class EventEntity extends BaseEntity {
     private String description;
     private String location;
     private LocalDateTime dateTime;
-    private Integer price;
-    private UserEntity user;
     private List<MusicianEntity> musicians = new ArrayList<>();
+    private String createdBy;
 
     public EventEntity() {
     }
@@ -71,27 +68,6 @@ public class EventEntity extends BaseEntity {
         return this;
     }
 
-    @Column(nullable = false)
-    @Positive
-    public Integer getPrice() {
-        return price;
-    }
-
-    public EventEntity setPrice(Integer price) {
-        this.price = price;
-        return this;
-    }
-
-    @ManyToOne
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public EventEntity setUser(UserEntity user) {
-        this.user = user;
-        return this;
-    }
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
     public List<MusicianEntity> getMusicians() {
         return musicians;
@@ -99,6 +75,15 @@ public class EventEntity extends BaseEntity {
 
     public EventEntity setMusicians(List<MusicianEntity> musicians) {
         this.musicians = musicians;
+        return this;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public EventEntity setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
         return this;
     }
 }
