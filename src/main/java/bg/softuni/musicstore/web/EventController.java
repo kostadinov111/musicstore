@@ -85,8 +85,6 @@ public class EventController {
                        EventBindingModel eventBindingModel
     ) {
 
-//        EventViewModel eventViewModel = eventService.findEventById(id);
-
         EventEntity eventEntity = eventService.findEventEntityById(id);
 
         eventBindingModel.setId(eventEntity.getId());

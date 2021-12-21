@@ -15,12 +15,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUsername(String username);
 
-//    @EntityGraph(value = "user-roles")
-//    @Query("SELECT u FROM UserEntity u WHERE u.id=:id")
-//    UserEntity getUserEntity(@Param("id") Long Id);
-
-//    @EntityGraph(value = "user-roles")
-//    @Query("SELECT u FROM UserEntity u")
     List<UserEntity> findAll();
 
 

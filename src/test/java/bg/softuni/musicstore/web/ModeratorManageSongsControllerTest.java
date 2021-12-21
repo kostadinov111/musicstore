@@ -27,14 +27,4 @@ class ModeratorManageSongsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("moderator-manage-songs"));
     }
-
-    @Test
-    @WithMockUser(username = "moderator", roles = {"MODERATOR"})
-    void testOpenEditSongForm() throws Exception {
-
-        mockMvc
-                .perform(post("/artists/manage/songs/add"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(model().hasNoErrors());
-    }
 }

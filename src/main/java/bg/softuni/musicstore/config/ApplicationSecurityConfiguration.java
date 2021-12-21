@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -39,7 +37,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/users/login", "/users/register", "/info/jazz", "/info/hard-rock", "/info/hip-hop", "/api/**").permitAll()
-                .antMatchers("/admin/stats", "/admin/manage", "/admin/roles","/artists/manage", "/events/manage").hasRole(RoleNameEnums.ADMIN.name())
+                .antMatchers("/admin/stats", "/admin/manage", "/admin/roles").hasRole(RoleNameEnums.ADMIN.name())
                 .antMatchers("/artists/manage", "/artists/manage/pictures", "/artists/manage/musicians", "/artists/manage/albums", "/artists/manage/songs","/events/manage/**").hasRole(RoleNameEnums.MODERATOR.name())
                 .antMatchers("/**").authenticated()
                 .and()
@@ -57,11 +55,4 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .deleteCookies("JSESSIONID");
 
     }
-
-//    private CsrfTokenRepository csrfTokenRepository() {
-//
-//        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-//        repository.setSessionAttributeName("_csrf");
-//        return repository;
-//    }
 }

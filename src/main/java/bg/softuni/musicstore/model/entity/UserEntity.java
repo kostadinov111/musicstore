@@ -8,12 +8,6 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-//@NamedEntityGraph(
-//        name = "user-roles",
-//        attributeNodes = {
-//                @NamedAttributeNode("roles")
-//        }
-//)
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {

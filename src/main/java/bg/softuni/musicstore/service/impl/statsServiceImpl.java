@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
-public class statsServiceImpl implements StatsService {
+public class StatsServiceImpl implements StatsService {
 
     private int anonRequests, authRequest;
 

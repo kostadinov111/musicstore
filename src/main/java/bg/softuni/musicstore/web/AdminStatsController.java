@@ -6,18 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 @RequestMapping("/admin")
 public class AdminStatsController {
 
     private final StatsService statsService;
-    private final HttpServletRequest request;
 
-    public AdminStatsController(StatsService statsService, HttpServletRequest request) {
+    public AdminStatsController(StatsService statsService) {
         this.statsService = statsService;
-        this.request = request;
     }
 
     @GetMapping("/stats")
