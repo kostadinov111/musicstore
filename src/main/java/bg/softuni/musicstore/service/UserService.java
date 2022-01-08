@@ -26,4 +26,6 @@ public interface UserService {
     void addRole(Long id, String role);
 
     UserEntity findByUsername(String principalUsername);
+
+    Boolean isUsernameFree(String username);
 }

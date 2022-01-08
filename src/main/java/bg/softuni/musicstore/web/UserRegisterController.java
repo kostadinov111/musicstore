@@ -41,7 +41,10 @@ public class UserRegisterController {
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
 
-        if (bindingResult.hasErrors() || !userModel.getPassword().equals(userModel.getConfirmPassword())) {
+        // TODO check if username is free
+        Boolean isUsernameFree = userService.isUsernameFree(userModel.getUsername());
+
+        if (bindingResult.hasErrors() || !userModel.getPassword().equals(userModel.getConfirmPassword()) || isUsernameFree) {
 
             redirectAttributes
                     .addFlashAttribute("userModel", userModel)

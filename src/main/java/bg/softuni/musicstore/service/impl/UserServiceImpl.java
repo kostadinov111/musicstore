@@ -246,7 +246,7 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-    private boolean isUsernameFree(String username) {
+    public Boolean isUsernameFree(String username) {
         return userRepository
                 .findByUsername(username)
                 .isPresent();
